@@ -16,7 +16,7 @@ class MainViewController: UIViewController {
     }()
     
     var categories = [String]();
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self;
@@ -34,8 +34,6 @@ class MainViewController: UIViewController {
         }
         // Do any additional setup after loading the view.
     }
-
-
 }
 
 extension MainViewController {
@@ -71,10 +69,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         return cell;
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let nextController = MenuController() as? UIViewController {
-            
-            self.navigationController?.pushViewController(nextController, animated: false);
-        }
-        
+        let menuController = MenuController();
+        menuController.navigationTitle = categories[indexPath.row].capitalized;
+        self.navigationController?.pushViewController(menuController, animated: true);
     }
 }

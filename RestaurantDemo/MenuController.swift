@@ -26,12 +26,22 @@ class MenuController: UIViewController {
         menuTableView.dataSource = self;
         addSubView();
         constrains();
+        
+        Task.init {
+            if let title = navigationTitle {
+                print("menuTask: \(title)")
+                menu = try await ManagerController.shared.getMenu(categoryName: title);
+                print("menu: \(menu.description)")
+            }
+            
+        }
     }
 }
 
 extension MenuController {
     func addSubView() {
         self.navigationItem.title = navigationTitle ?? "Menu";
+        self.navigationController?.navigationBar.prefersLargeTitles = false;
         self.view.addSubview(menuTableView);
         
     }
