@@ -29,7 +29,7 @@ class MainViewController: UIViewController {
                 categories = try await ManagerController.shared.getCategories();
                 tableView.reloadData();
             } catch {
-                throw AppError.DecodeError.decodeCategoriesError;
+                Global.showAlert(title: "Failed to fetch categories", error: error, viewController: self);
             }
         }
         // Do any additional setup after loading the view.
@@ -70,7 +70,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let menuController = MenuController();
-        menuController.navigationTitle = categories[indexPath.row].capitalized;
+        menuController.navigationTitle = categories[indexPath.row];
         self.navigationController?.pushViewController(menuController, animated: true);
     }
 }

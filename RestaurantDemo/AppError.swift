@@ -10,6 +10,8 @@ import Foundation
 class AppError{
     enum ServerError: Error, LocalizedError {
         case GetCategoriesError
+        case GetMenuError
+        case FetchImageDataMissingError
     }
     
     enum DecodeError: Error, LocalizedError {
