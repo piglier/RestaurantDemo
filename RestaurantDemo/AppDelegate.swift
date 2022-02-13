@@ -71,3 +71,14 @@ extension UIView {
         
     }
 }
+
+extension String {
+    func textAutoHeight(width:CGFloat, font:UIFont) ->CGFloat{
+        let string = self as NSString
+        let origin = NSStringDrawingOptions.usesLineFragmentOrigin
+        let lead = NSStringDrawingOptions.usesFontLeading
+        let ssss = NSStringDrawingOptions.usesDeviceMetrics
+        let rect = string.boundingRect(with:CGSize(width: width, height:0), options: [origin,lead,ssss], attributes: [NSAttributedString.Key.font: font], context:nil)
+        return rect.height;
+    }
+}
