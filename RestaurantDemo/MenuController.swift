@@ -17,7 +17,7 @@ class MenuController: UIViewController {
     }()
     var navigationTitle: String?
     
-    var menu = [MenuModel]();
+    var menuItems = [MenuModel]();
     
     var imageLoadTask: [IndexPath: Task<Void, Never>] = [:];
     
@@ -40,8 +40,14 @@ class MenuController: UIViewController {
     }
     
     private func updateUI(with menuItems: [MenuModel]) {
-        self.menu = menuItems;
+        self.menuItems = menuItems;
+        self.menuTableView.estimatedRowHeight = UITableView.automaticDimension;
         self.menuTableView.reloadData();
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true);
+        self.imageLoadTask.forEach { _, value in value.cancel() };
     }
 }
     
@@ -50,7 +56,6 @@ class MenuController: UIViewController {
         func addSubView() {
             self.navigationItem.title = navigationTitle ?? "Menu";
             self.navigationController?.navigationBar.prefersLargeTitles = false;
-            self.menuTableView.estimatedRowHeight = 44;
             self.view.addSubview(menuTableView);
             
         }
@@ -61,9 +66,6 @@ class MenuController: UIViewController {
                                       self.menuTableView.rightAnchor.constraint(equalTo: view.rightAnchor),
                                      ]);
         }
-        func callApi() {
-            
-        }
     }
     
     extension MenuController: UITableViewDelegate, UITableViewDataSource {
@@ -72,15 +74,16 @@ class MenuController: UIViewController {
         }
         
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return menu.count;
+            return menuItems.count;
         }
+        
         func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            44;
+            return UITableView.automaticDimension;
         }
         
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let cell = tableView.dequeueReusableCell(withIdentifier: "menuCell", for: indexPath) as! MenuTableViewCell;
-            let menuItem = self.menu[indexPath.row];
+            let menuItem = self.menuItems[indexPath.row];
             
             cell.labelMenu.text = menuItem.name;
             cell.labelPrice.text = menuItem.price.formatted(.currency(code: "usd"));
@@ -96,4 +99,9 @@ class MenuController: UIViewController {
             return cell;
         }
         
+        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            let detail = DetailController();
+            detail.menuItem = menuItems[indexPath.row];
+            self.navigationController?.pushViewController(detail, animated: true);
+        }
     }
