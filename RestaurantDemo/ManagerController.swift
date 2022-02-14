@@ -11,6 +11,14 @@ import UIKit
 class ManagerController {
     static let shared = ManagerController();
     
+    static let orderUpdateNotification = Notification.Name("Restaurant.orderUpdate");
+    
+    var order = Order() {
+        didSet {
+            NotificationCenter.default.post(name: ManagerController.orderUpdateNotification, object: nil);
+        }
+    }
+    
     let base_url = URL(string: "http://localhost:8080/")!;
     
     func getCategories() async throws -> [String] {
@@ -20,7 +28,7 @@ class ManagerController {
         return try JSONDecoder().decode(CategoriesModel.self, from: data).categories;
     }
     
-    func getMenu(categoryName: String) async throws -> [MenuModel] {
+    func getMenu(categoryName: String) async throws -> [MenuItem] {
         let menuUrl = base_url.appendingPathComponent("menu");
         var component = URLComponents(url: menuUrl, resolvingAgainstBaseURL: true)!;
         component.queryItems = [URLQueryItem(name: "category", value: categoryName)];

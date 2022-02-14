@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		164DA89427AA7F3C0040E9A1 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164DA89327AA7F3C0040E9A1 /* Global.swift */; };
 		164DA89627AAB7310040E9A1 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164DA89527AAB7310040E9A1 /* MenuTableViewCell.swift */; };
+		1680F12E27BA78A200574C92 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1680F12D27BA78A200574C92 /* Order.swift */; };
 		532B117F27954E0300A9F0CD /* ServerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532B117E27954E0300A9F0CD /* ServerModel.swift */; };
 		532B11A12796B7C000A9F0CD /* OrderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532B11A02796B7C000A9F0CD /* OrderController.swift */; };
 		532B11A32796B91E00A9F0CD /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532B11A22796B91E00A9F0CD /* TabBarController.swift */; };
@@ -26,6 +27,7 @@
 /* Begin PBXFileReference section */
 		164DA89327AA7F3C0040E9A1 /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		164DA89527AAB7310040E9A1 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
+		1680F12D27BA78A200574C92 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		532B117E27954E0300A9F0CD /* ServerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerModel.swift; sourceTree = "<group>"; };
 		532B11A02796B7C000A9F0CD /* OrderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderController.swift; sourceTree = "<group>"; };
 		532B11A22796B91E00A9F0CD /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 				532B11A02796B7C000A9F0CD /* OrderController.swift */,
 				532B11A62798394200A9F0CD /* DetailController.swift */,
 				532B117E27954E0300A9F0CD /* ServerModel.swift */,
+				1680F12D27BA78A200574C92 /* Order.swift */,
 				539D110027954A15006F6D49 /* AppError.swift */,
 				164DA89327AA7F3C0040E9A1 /* Global.swift */,
 				539D10FE279549FD006F6D49 /* ManagerController.swift */,
@@ -170,6 +173,7 @@
 				532B11A32796B91E00A9F0CD /* TabBarController.swift in Sources */,
 				539D10ED2795454D006F6D49 /* SceneDelegate.swift in Sources */,
 				532B11A72798394200A9F0CD /* DetailController.swift in Sources */,
+				1680F12E27BA78A200574C92 /* Order.swift in Sources */,
 				164DA89427AA7F3C0040E9A1 /* Global.swift in Sources */,
 				532B11A12796B7C000A9F0CD /* OrderController.swift in Sources */,
 			);

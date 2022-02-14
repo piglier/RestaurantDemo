@@ -11,6 +11,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
+    var restaurantTabbar = UITabBarController();
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -18,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let initWindow = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: UIScreen.main.bounds)
-        let tabBarController = UITabBarController();
+//        let tabBarController = UITabBarController();
         let mainViewController = MainViewController();
         let orderViewController = OrderController();
         mainViewController.title = "Menu";
@@ -28,8 +29,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navController = UINavigationController(rootViewController: mainViewController);
         navController.viewControllers = [mainViewController];
         let navController2 = UINavigationController(rootViewController: orderViewController);
-        tabBarController.viewControllers = [navController, navController2];
-        window?.rootViewController = tabBarController;
+        restaurantTabbar.viewControllers = [navController, navController2];
+        NotificationCenter.default.addObserver(self, selector: #selector(updateBadge), name: ManagerController.orderUpdateNotification, object: nil);
+        window?.rootViewController = restaurantTabbar;
         window?.makeKeyAndVisible();
         window?.windowScene = initWindow;
     }
@@ -62,6 +64,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
-
+    @objc
+    func updateBadge() {
+        switch ManagerController.shared.order.menuItems.count {
+        case 0:
+            restaurantTabbar.viewControllers?[1].tabBarItem.badgeValue = nil;
+        case let count:
+            restaurantTabbar.viewControllers?[1].tabBarItem.badgeValue = String(count);
+        }
+    }
 }
 

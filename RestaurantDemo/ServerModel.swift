@@ -12,10 +12,10 @@ struct CategoriesModel: Codable {
 }
 
 struct ItemModel: Codable {
-    let items: [MenuModel];
+    let items: [MenuItem];
 }
 
-struct MenuModel: Codable {
+struct MenuItem: Codable {
     let category: String;
     let id: Int;
     let imageUrl: URL;

@@ -17,7 +17,7 @@ class MenuController: UIViewController {
     }()
     var navigationTitle: String?
     
-    var menuItems = [MenuModel]();
+    var menuItems = [MenuItem]();
     
     var imageLoadTask: [IndexPath: Task<Void, Never>] = [:];
     
@@ -39,9 +39,9 @@ class MenuController: UIViewController {
         }
     }
     
-    private func updateUI(with menuItems: [MenuModel]) {
+    private func updateUI(with menuItems: [MenuItem]) {
         self.menuItems = menuItems;
-        self.menuTableView.estimatedRowHeight = UITableView.automaticDimension;
+//        self.menuTableView.estimatedRowHeight = UITableView.automaticDimension;
         self.menuTableView.reloadData();
     }
     
@@ -78,7 +78,12 @@ class MenuController: UIViewController {
         }
         
         func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            return UITableView.automaticDimension;
+//            return UITableView.automaticDimension;
+            return 44;
+        }
+        
+        func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+            return true;
         }
         
         func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -93,8 +98,8 @@ class MenuController: UIViewController {
                     if let isIndexValid = menuTableView.indexPath(for: cell), isIndexValid == indexPath {
                         cell.imageViewMenu.image = image;
                     }
-                    imageLoadTask[indexPath] = nil;
                 }
+                imageLoadTask[indexPath] = nil;
             }
             return cell;
         }

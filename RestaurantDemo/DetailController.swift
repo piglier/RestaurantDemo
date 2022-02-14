@@ -14,26 +14,36 @@ class DetailController: UIViewController {
     private let labelPrice = UILabel();
     private let labelDetail = UILabel();
     private let buttonAddOrder = UIButton();
-    
-    
-    var menuItem: MenuModel?;
+    var menuItem: MenuItem?;
     
     override func viewDidLoad() {
         addSubView();
         constrains();
         updateUI();
+        buttonAddOrder.addTarget(self, action: #selector(addOrder), for: .touchUpInside);
+    }
+    
+    @objc
+    func addOrder() {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.1, options: [], animations: {
+            self.buttonAddOrder.transform = CGAffineTransform(scaleX: 2.0, y: 2.0)
+            self.buttonAddOrder.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        }, completion: nil)
+        if let menuItem = menuItem {
+            ManagerController.shared.order.menuItems.append(menuItem);
+        }
     }
 }
 
 extension DetailController {
-    func addSubView() {
+    private func addSubView() {
         self.view.addSubview(imageViewDetail);
         self.view.addSubview(labelMenu);
         self.view.addSubview(labelPrice);
         self.view.addSubview(labelDetail);
         self.view.addSubview(buttonAddOrder);
     }
-    func constrains() {
+    private func constrains() {
         imageViewDetail.translatesAutoresizingMaskIntoConstraints = false;
         labelMenu.translatesAutoresizingMaskIntoConstraints = false;
         labelPrice.translatesAutoresizingMaskIntoConstraints = false;
