@@ -47,8 +47,28 @@ extension OrderController {
         ])
     }
     
+    private func submitOrder() {
+        let menuIds = ManagerController.shared.order.menuItems.map{ $0.id }
+        Task.init {
+            do {
+                let minutesToPrepare = try await ManagerController.shared.submitOrder(menuIds: menuIds);
+                present(<#T##viewControllerToPresent: UIViewController##UIViewController#>, animated: <#T##Bool#>, completion: <#T##(() -> Void)?##(() -> Void)?##() -> Void#>)
+            } catch {}
+        }
+        
+    }
+    
     @objc func submit() {
-        print("submit")
+        let costTotal = ManagerController.shared.order.menuItems.reduce(0.0) { (result, menuItem) -> Double in
+            return result + menuItem.price;
+        }
+        let myBill = costTotal.formatted(.currency(code: "usd"));
+        let alertController = UIAlertController(title: "Confirm Order", message: "You are about to  submit your order with total of \(myBill)", preferredStyle: .actionSheet);
+        alertController.addAction(UIAlertAction(title: "Submit", style: .default, handler: { _ in
+            self.submitOrder();
+        }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil));
+        present(alertController, animated: true, completion: nil);
     }
 }
 

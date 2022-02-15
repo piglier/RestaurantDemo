@@ -32,3 +32,11 @@ struct MenuItem: Codable {
         case price
     }
 }
+
+struct WaitTime: Codable {
+    let prepareTime: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case prepareTime = "preparation_time"
+    }
+}

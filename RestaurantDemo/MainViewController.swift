@@ -34,12 +34,16 @@ class MainViewController: UIViewController {
         }
         // Do any additional setup after loading the view.
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true);
+        self.navigationItem.title = "Restaurant";
+        self.navigationController?.navigationBar.prefersLargeTitles = true;
+        navigationController?.navigationItem.largeTitleDisplayMode = .always;
+    }
 }
 
 extension MainViewController {
     private func addSubview() {
-        self.navigationItem.title = "Restaurant";
-        self.navigationController?.navigationBar.prefersLargeTitles = true;
         self.view.addSubview(tableView);
     }
     private func addConstrains() {

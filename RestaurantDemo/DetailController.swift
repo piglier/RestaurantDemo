@@ -68,8 +68,6 @@ extension DetailController {
     }
     private func updateUI() {
         self.view.backgroundColor = .white;
-        self.navigationItem.title = "Detail";
-        self.navigationController?.navigationBar.prefersLargeTitles = false;
         buttonAddOrder.setTitle("Add", for: .normal);
         buttonAddOrder.backgroundColor = .systemBlue;
         buttonAddOrder.layer.cornerRadius = 10;

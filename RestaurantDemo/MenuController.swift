@@ -39,9 +39,15 @@ class MenuController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated);
+        self.navigationItem.title = navigationTitle ?? "Menu";
+        self.navigationController?.navigationItem.largeTitleDisplayMode = .never;
+    }
+    
     private func updateUI(with menuItems: [MenuItem]) {
         self.menuItems = menuItems;
-//        self.menuTableView.estimatedRowHeight = UITableView.automaticDimension;
+        //        self.menuTableView.estimatedRowHeight = UITableView.automaticDimension;
         self.menuTableView.reloadData();
     }
     
@@ -50,63 +56,61 @@ class MenuController: UIViewController {
         self.imageLoadTask.forEach { _, value in value.cancel() };
     }
 }
+
+extension MenuController {
     
-    extension MenuController {
+    func addSubView() {
+        self.view.addSubview(menuTableView);
         
-        func addSubView() {
-            self.navigationItem.title = navigationTitle ?? "Menu";
-            self.navigationController?.navigationBar.prefersLargeTitles = false;
-            self.view.addSubview(menuTableView);
-            
-        }
-        func constrains() {
-            self.view.addConstraints([self.menuTableView.topAnchor.constraint(equalTo: view.topAnchor),
-                                      self.menuTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-                                      self.menuTableView.leftAnchor.constraint(equalTo: view.leftAnchor),
-                                      self.menuTableView.rightAnchor.constraint(equalTo: view.rightAnchor),
-                                     ]);
-        }
+    }
+    func constrains() {
+        self.view.addConstraints([self.menuTableView.topAnchor.constraint(equalTo: view.topAnchor),
+                                  self.menuTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+                                  self.menuTableView.leftAnchor.constraint(equalTo: view.leftAnchor),
+                                  self.menuTableView.rightAnchor.constraint(equalTo: view.rightAnchor),
+                                 ]);
+    }
+}
+
+extension MenuController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1;
     }
     
-    extension MenuController: UITableViewDelegate, UITableViewDataSource {
-        func numberOfSections(in tableView: UITableView) -> Int {
-            return 1;
-        }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return menuItems.count;
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        //            return UITableView.automaticDimension;
+        return 44;
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true;
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "menuCell", for: indexPath) as! MenuTableViewCell;
+        let menuItem = self.menuItems[indexPath.row];
         
-        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return menuItems.count;
-        }
-        
-        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//            return UITableView.automaticDimension;
-            return 44;
-        }
-        
-        func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-            return true;
-        }
-        
-        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "menuCell", for: indexPath) as! MenuTableViewCell;
-            let menuItem = self.menuItems[indexPath.row];
-            
-            cell.labelMenu.text = menuItem.name;
-            cell.labelPrice.text = menuItem.price.formatted(.currency(code: "usd"));
-            cell.imageViewMenu.image = nil;
-            imageLoadTask[indexPath] = Task.init {
-                if let image = try? await ManagerController.shared.fetchImage(from: menuItem.imageUrl) {
-                    if let isIndexValid = menuTableView.indexPath(for: cell), isIndexValid == indexPath {
-                        cell.imageViewMenu.image = image;
-                    }
+        cell.labelMenu.text = menuItem.name;
+        cell.labelPrice.text = menuItem.price.formatted(.currency(code: "usd"));
+        cell.imageViewMenu.image = nil;
+        imageLoadTask[indexPath] = Task.init {
+            if let image = try? await ManagerController.shared.fetchImage(from: menuItem.imageUrl) {
+                if let isIndexValid = menuTableView.indexPath(for: cell), isIndexValid == indexPath {
+                    cell.imageViewMenu.image = image;
                 }
-                imageLoadTask[indexPath] = nil;
             }
-            return cell;
+            imageLoadTask[indexPath] = nil;
         }
-        
-        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            let detail = DetailController();
-            detail.menuItem = menuItems[indexPath.row];
-            self.navigationController?.pushViewController(detail, animated: true);
-        }
+        return cell;
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detail = DetailController();
+        detail.menuItem = menuItems[indexPath.row];
+        self.navigationController?.pushViewController(detail, animated: true);
+    }
+}

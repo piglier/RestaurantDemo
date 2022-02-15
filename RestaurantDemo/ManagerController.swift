@@ -38,7 +38,6 @@ class ManagerController {
         return try JSONDecoder().decode(ItemModel.self, from: data).items;
     }
     
-    
     func fetchImage(from url: URL) async throws -> UIImage {
         let (data, reponse) = try await URLSession.shared.data(from: url);
         
@@ -49,5 +48,24 @@ class ManagerController {
             throw AppError.ServerError.FetchImageDataMissingError
         }
         return image;
+    }
+    
+    
+    func submitOrder(menuIds: [Int]) async throws -> Int {
+        let orderUrl = base_url.appendingPathComponent("order");
+        var request = URLRequest(url: orderUrl);
+        request.httpMethod = "POST";
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type");
+        let menuIdsDics = ["menuIds": menuIds];
+        let jsonData = try? JSONEncoder().encode(menuIdsDics);
+        request.httpBody = jsonData;
+        
+        let (data, reposne) = try await URLSession.shared.data(for: request);
+        guard let reponse = reposne as? HTTPURLResponse, reponse.statusCode == 200 else {
+            throw AppError.ServerError.PostOrderError
+        }
+        let decoder = JSONDecoder();
+        let waitTime = try decoder.decode(WaitTime.self, from: data);
+        return waitTime.prepareTime;
     }
 }

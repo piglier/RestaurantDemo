@@ -12,6 +12,7 @@ class AppError{
         case GetCategoriesError
         case GetMenuError
         case FetchImageDataMissingError
+        case PostOrderError
     }
     
     enum DecodeError: Error, LocalizedError {
