@@ -23,6 +23,10 @@ class DetailController: UIViewController {
         buttonAddOrder.addTarget(self, action: #selector(addOrder), for: .touchUpInside);
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated);
+    }
+    
     @objc
     func addOrder() {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.1, options: [], animations: {
@@ -58,13 +62,11 @@ extension DetailController {
         if let menuItem = menuItem {
             minHeight = menuItem.description.textAutoHeight(width: viewWidth, font: UIFont.systemFont(ofSize: 16));
         }
-        
-        imageViewDetail.anchor(top: newTopAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 100, enableInsets: false);
-        labelMenu.anchor(top: imageViewDetail.bottomAnchor, left: view.leftAnchor, bottom: nil, right: labelPrice.leftAnchor, paddingTop: 5, paddingLeft: 10, paddingBottom: 0, paddingRight: 60, width: 0, height: 33, enableInsets: false);
-        labelPrice.anchor(top: imageViewDetail.bottomAnchor, left: nil, bottom: nil, right: view.rightAnchor, paddingTop: 5, paddingLeft: 0, paddingBottom: 0, paddingRight: 10, width: 60, height: 33, enableInsets: false);
-        labelDetail.anchor(top: labelMenu.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 5, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: minHeight, enableInsets: false);
-        
-        buttonAddOrder.anchor(top: nil, left: view.leftAnchor, bottom: bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 10, paddingBottom: 5, paddingRight: 10, width: 0, height: 44, enableInsets: false);
+        imageViewDetail.anchor(top: newTopAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: 100, enableInsets: false);
+        labelMenu.anchor(top: imageViewDetail.bottomAnchor, left: view.leftAnchor, bottom: nil, right: labelPrice.leftAnchor, paddingTop: 5, paddingLeft: 20, paddingBottom: 0, paddingRight: 60, width: 0, height: 33, enableInsets: false);
+        labelPrice.anchor(top: imageViewDetail.bottomAnchor, left: nil, bottom: nil, right: view.rightAnchor, paddingTop: 5, paddingLeft: 0, paddingBottom: 0, paddingRight: 20, width: 60, height: 33, enableInsets: false);
+        labelDetail.anchor(top: labelMenu.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 5, paddingLeft: 20, paddingBottom: 0, paddingRight: 20, width: 0, height: minHeight, enableInsets: false);
+        buttonAddOrder.anchor(top: nil, left: view.leftAnchor, bottom: bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: 5, paddingRight: 20, width: 0, height: 44, enableInsets: false);
     }
     private func updateUI() {
         self.view.backgroundColor = .white;

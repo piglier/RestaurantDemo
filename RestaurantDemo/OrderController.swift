@@ -25,17 +25,14 @@ class OrderController: UIViewController {
         orderTableView.delegate = self;
         addSubview();
         addConstrains();
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true);
-        self.orderTableView.reloadData();
+        NotificationCenter.default.addObserver(orderTableView, selector: #selector(orderTableView.reloadData), name: ManagerController.orderUpdateNotification, object: nil);
     }
 }
 
 extension OrderController {
     private func addSubview() {
         self.navigationItem.title = "Order";
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "submit", style: .plain, target: self, action: #selector(submit))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "submit", style: .plain, target: self, action: #selector(submit));
         self.view.addSubview(orderTableView);
     }
     private func addConstrains() {
@@ -52,7 +49,9 @@ extension OrderController {
         Task.init {
             do {
                 let minutesToPrepare = try await ManagerController.shared.submitOrder(menuIds: menuIds);
-                present(<#T##viewControllerToPresent: UIViewController##UIViewController#>, animated: <#T##Bool#>, completion: <#T##(() -> Void)?##(() -> Void)?##() -> Void#>)
+                let orderController = OrderWaitViewController();
+                orderController.waitTime = minutesToPrepare
+                present(orderController, animated: true, completion: nil);
             } catch {}
         }
         

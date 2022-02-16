@@ -42,7 +42,6 @@ class MenuController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
         self.navigationItem.title = navigationTitle ?? "Menu";
-        self.navigationController?.navigationItem.largeTitleDisplayMode = .never;
     }
     
     private func updateUI(with menuItems: [MenuItem]) {
@@ -109,8 +108,9 @@ extension MenuController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detail = DetailController();
-        detail.menuItem = menuItems[indexPath.row];
-        self.navigationController?.pushViewController(detail, animated: true);
+        let detailController = DetailController();
+        detailController.navigationItem.largeTitleDisplayMode = .never;
+        detailController.menuItem = menuItems[indexPath.row];
+        self.navigationController?.pushViewController(detailController, animated: true);
     }
 }

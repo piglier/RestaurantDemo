@@ -54,10 +54,6 @@ extension MainViewController {
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
         ])
     }
-    
-    @objc func selectorName() {
-        print("maybe")
-    }
 }
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
@@ -74,6 +70,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let menuController = MenuController();
+        menuController.navigationItem.largeTitleDisplayMode = .never;
         menuController.navigationTitle = categories[indexPath.row];
         self.navigationController?.pushViewController(menuController, animated: true);
     }
